@@ -70,6 +70,13 @@ Promise.all([recordVideoOne, recordVideoTwo, recordVideoThree])
 // Promise.race is another method that takes an array but instead of waiting for all promises to be resolved, it gives a callback when any promise is resolved or rejected
 // finally is a callback that is called whether the promise is a success or a failure
 
+// When to use Promises over Callbacks?:
+// 1. When you want cleaner and more readable code (avoid callback hell a.k.a deep nesting)
+// 2. Better error handling with catch
+// 3. Promises are native in ES6 and are widely supported by modern APIS
+// 4. Promises are chainable and allow parallel or sequential async operations
+// 5. When using APIs that return promises
+
 // ##################################################
 // What is a the Event Loop?
 // ##################################################
