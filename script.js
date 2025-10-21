@@ -132,3 +132,106 @@ console.log("C");
 // A
 // C
 // B
+
+// ##################################################
+// The async keyword
+// ##################################################
+
+// The async keyword is used to declare an asynchronous function.
+// An async function is required in order to use the await keyword.
+
+// When a function is declared with async, it automatically returns a promise, returning
+// in a async function is the same as resolving a promise, and therefore throwing an error
+// will reject the promise.
+
+// async functions are a more human-friendly way of writing a promise, this is done by making
+// it look more like typical synchronous code.
+
+// The async keyword can also be used with any of the same ways a function can be
+// created, a.k.a it is valid to use an async function anywhere you can use a nomal function.
+// Examples:
+
+const asyncFunction = async () => {
+  // Do something asynchronously and return a promise
+  return result;
+};
+
+array.forEach(async (item) => {
+  // Do something asynchronously for each item in "array"
+  // .map could be used here to return an array of promises to use with "Promise.all()"
+});
+
+server.getPeople().then(async (people) => {
+  people.forEach((person) => {
+    // Do something asynchronously for each person
+  });
+});
+
+// ##################################################
+// The await keyword
+// ##################################################
+
+// await does the following: it tells JavaScript to wait for an asynchronous action to
+// finish before continuing the function, like a "pause until done" keyword.
+
+// The await keyword is used to get a value from a function where you would normally use ".then()".
+// Instead of calling ".then()" after the async function, you assign a variable to the result
+// using await, then the result can be used in the code like typical synchronous code.
+
+// ##### Error Handling #####
+
+// Handling errors in async functions is very easy.
+
+// Promises have the ".catch()" method for handling rejected promises, and since async
+// functions just return a promise, you can call the function, and append a ".catch()"
+// method to the end.
+// Example:
+
+asyncFunctionCall().catch((error) => {
+  console.error(error);
+});
+
+// There is another way to do this, through the try/catch block.
+// If you want to handle the error directly inside the async function, you can use a
+// try/catch block with async/wait syntax.
+// If JavaScript throws an error in the try block, the catch block code will run instead.
+// Example:
+
+async function getPersonsInfo(name) {
+  try {
+    const people = await server.getPeople();
+    const person = people.find((person) => {
+      return person.name === name;
+    });
+    return person;
+  } catch (error) {
+    // Handle the error code
+  }
+}
+
+// Another example by refactoring old code, and using async and await:
+
+// Old code:
+const img = document.querySelector("img");
+fetch("https://api.giphy.com/v1/gifs/translate?api_key=YOUR_KEY_HERE&s=cats")
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (response) {
+    img.src = response.data.images.original.url;
+  });
+
+// New code:
+const img = document.querySelector("img");
+
+async function getCats() {
+  const response = await fetch(
+    "https://api.giphy.com/v1/gifs/translate?api_key=YOUR_KEY_HERE&s=cats"
+  );
+  const catData = await response.json();
+  img.src = catData.data.images.original.url;
+}
+getCats();
+
+// The new code behave exactly the same as the old code.
+// REMEMBER: async/await are just promises written in a different way.
